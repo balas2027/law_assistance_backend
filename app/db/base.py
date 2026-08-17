@@ -1,5 +1,6 @@
 # Import all the models so that Base has them before being imported by Alembic
 from app.db.session import Base
+from app.models.user_type import UserType
 from app.models.user import User
 from app.models.chat import Chat
 from app.models.message import Message
