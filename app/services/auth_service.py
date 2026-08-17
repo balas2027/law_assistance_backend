@@ -21,20 +21,10 @@ class AuthService:
         token = create_access_token(user.id)
         return user, token
 
-    def login(
-        self, db: Session, *, email: str, password: str, user_type: str
-    ) -> Tuple[User, str]:
-        user_type_obj = user_type_repository.get_by_code(db, code=user_type)
-        if not user_type_obj:
-            raise HTTPException(status_code=400, detail="Invalid user type")
-        user = user_repository.authenticate(
-            db, email=email, password=password, user_type_id=user_type_obj.id
-        )
+    def login(self, db: Session, *, email: str, password: str) -> Tuple[User, str]:
+        user = user_repository.authenticate(db, email=email, password=password)
         if not user:
-            raise HTTPException(
-                status_code=400,
-                detail="Incorrect email, password, or account type",
-            )
+            raise HTTPException(status_code=400, detail="Incorrect email or password")
         token = create_access_token(user.id)
         return user, token
 

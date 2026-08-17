@@ -7,5 +7,13 @@ from app.models.message import Message
 from app.models.document import Document
 from app.models.course import Course
 from app.models.lesson import Lesson
+from app.models.topic import Topic
 from app.models.quiz import Quiz
+from app.models.question import Question
+from app.models.question_option import QuestionOption
+from app.models.quiz_attempt import QuizAttempt
+from app.models.quiz_answer import QuizAnswer
+from app.models.user_stat import UserStat
+from app.models.user_streak import UserStreak
+from app.models.user_topic_progress import UserTopicProgress
 from app.models.admin import AdminLog

@@ -25,12 +25,10 @@ class UserRepository(CRUDBase[User, UserCreate, UserUpdate]):
         return db_obj
 
     def authenticate(
-        self, db: Session, *, email: str, password: str, user_type_id: int
+        self, db: Session, *, email: str, password: str
     ) -> Optional[User]:
         user = self.get_by_email(db, email=email)
         if not user:
-            return None
-        if user.user_type_id != user_type_id:
             return None
         if not verify_password(password, user.hashed_password):
             return None

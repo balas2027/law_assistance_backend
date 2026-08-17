@@ -2,7 +2,7 @@ from typing import Optional
 from datetime import datetime
 from pydantic import BaseModel, EmailStr, ConfigDict, field_validator
 
-VALID_USER_TYPES = {"law_student", "researcher", "common_man", "law_professional", "admin"}
+VALID_USER_TYPES = {"common_man", "admin"}
 
 
 class UserBase(BaseModel):

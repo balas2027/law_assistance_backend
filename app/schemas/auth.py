@@ -11,7 +11,6 @@ class Token(BaseModel):
 class LoginRequest(BaseModel):
     email: EmailStr
     password: str
-    user_type: str
 
 
 class TokenPayload(BaseModel):

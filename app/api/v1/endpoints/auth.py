@@ -21,7 +21,7 @@ def signup(obj_in: UserCreate, db: Session = Depends(get_db)) -> Token:
 @router.post("/login", response_model=Token)
 def login(req: LoginRequest, db: Session = Depends(get_db)) -> Token:
     user, access_token = auth_service.login(
-        db, email=req.email, password=req.password, user_type=req.user_type
+        db, email=req.email, password=req.password
     )
     return Token(
         access_token=access_token,
