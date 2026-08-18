@@ -1,4 +1,5 @@
 from typing import List
+from datetime import date, datetime, timedelta
 from sqlalchemy import func, distinct
 from sqlalchemy.orm import Session
 from app.models.user import User
@@ -42,6 +43,24 @@ class AdminService:
             attendees=attendees,
             users_by_type=users_by_type,
         )
+
+    def get_user_signups(self, db: Session, *, from_date: str, to_date: str) -> List[dict]:
+        start = date.fromisoformat(from_date)
+        end = date.fromisoformat(to_date)
+        rows = db.query(
+            func.date(User.created_at).label("day"),
+            func.count(User.id),
+        ).filter(
+            User.created_at >= datetime(start.year, start.month, start.day),
+            User.created_at < datetime(end.year, end.month, end.day) + timedelta(days=1),
+        ).group_by("day").all()
+        counts = {str(day): cnt for day, cnt in rows}
+        result = []
+        cur = start
+        while cur <= end:
+            result.append({"date": cur.isoformat(), "count": counts.get(cur.isoformat(), 0)})
+            cur += timedelta(days=1)
+        return result
 
     def get_quiz_analytics(self, db: Session, *, quiz_id: int) -> QuizAnalyticsOut:
         quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()

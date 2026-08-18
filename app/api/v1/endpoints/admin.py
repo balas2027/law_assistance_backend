@@ -32,6 +32,16 @@ def list_users(
     return [auth_service.to_user_out(u) for u in users]
 
 
+@router.get("/users/signups")
+def get_user_signups(
+    from_date: str,
+    to_date: str,
+    db: Session = Depends(get_db),
+    _: User = Depends(get_current_admin),
+) -> list:
+    return admin_service.get_user_signups(db, from_date=from_date, to_date=to_date)
+
+
 @router.get("/quizzes/{quiz_id}/analytics", response_model=QuizAnalyticsOut)
 def get_quiz_analytics(
     quiz_id: int,
