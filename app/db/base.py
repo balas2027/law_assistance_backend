@@ -1,4 +1,3 @@
-# Import all the models so that Base has them before being imported by Alembic
 from app.db.session import Base
 from app.models.user_type import UserType
 from app.models.user import User
@@ -16,4 +15,5 @@ from app.models.quiz_answer import QuizAnswer
 from app.models.user_stat import UserStat
 from app.models.user_streak import UserStreak
 from app.models.user_topic_progress import UserTopicProgress
+from app.models.lesson_completion import LessonCompletion
 from app.models.admin import AdminLog
