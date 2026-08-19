@@ -17,6 +17,12 @@ class Settings(BaseSettings):
 
     # AI
     ANTHROPIC_API_KEY: str = ""
+    GROQ_API_KEY: str = ""
+    GROQ_BASE_URL: str = "https://api.groq.com/openai/v1"
+    GROQ_MODEL: str = "openai/gpt-oss-120b"
+    EMBEDDING_MODEL_NAME: str = "all-MiniLM-L6-v2"
+    CHROMA_DB_PATH: str = "combined_db"
+    CHROMA_COLLECTION_NAME: str = "legal_assistant"
 
     @field_validator("ALLOWED_ORIGINS", mode="before")
     @classmethod

@@ -123,3 +123,5 @@ venv.bak/
 
 # JetBrains settings
 .idea/
+.env
+.env.*

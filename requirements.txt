@@ -13,3 +13,6 @@ python-multipart
 python-dotenv
 httpx
 anthropic
+chromadb
+sentence-transformers
+openai
