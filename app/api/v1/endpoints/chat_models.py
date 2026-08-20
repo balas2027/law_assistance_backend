@@ -25,3 +25,15 @@ class ChatResponse(BaseModel):
     answer: str
     source_type: Optional[str] = None
     sources: List[SourceDocument]
+
+
+class SuggestedPrompt(BaseModel):
+    id: str
+    icon: str
+    text: str
+
+
+class ChatConfigResponse(BaseModel):
+    heading: str
+    description: str
+    suggested_prompts: List[SuggestedPrompt]

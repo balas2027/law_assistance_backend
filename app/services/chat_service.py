@@ -56,6 +56,48 @@ class ChatService:
         }
         self.llm_generate_fn = llm_generate_fn or llm_client.generate_answer
 
+    def get_chat_config(self) -> Dict[str, object]:
+        return {
+            "heading": "How can I help you with Indian law?",
+            "description": (
+                "Ask questions, explore constitutional articles, analyze case "
+                "precedents, or verify sections under BNS, BNSS, and Indian "
+                "jurisprudence."
+            ),
+            "suggested_prompts": [
+                {
+                    "id": "p1",
+                    "icon": "mail",
+                    "text": "What are my rights if I receive a legal notice?",
+                },
+                {
+                    "id": "p2",
+                    "icon": "contract",
+                    "text": "Explain this rental agreement",
+                },
+                {
+                    "id": "p3",
+                    "icon": "local_police",
+                    "text": "What should I do after receiving an FIR?",
+                },
+                {
+                    "id": "p4",
+                    "icon": "apartment",
+                    "text": "Process for registering a Private Limited Company",
+                },
+                {
+                    "id": "p5",
+                    "icon": "family_restroom",
+                    "text": "Grounds for mutual consent divorce",
+                },
+                {
+                    "id": "p6",
+                    "icon": "gavel",
+                    "text": "Difference between bailable and non-bailable offense",
+                },
+            ],
+        }
+
     def _normalize_source_type(self, source_type: Optional[str]) -> Optional[str]:
         if source_type is None:
             return None

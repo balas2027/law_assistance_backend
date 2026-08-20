@@ -1,6 +1,11 @@
 from fastapi import APIRouter, HTTPException, status
 
-from app.api.v1.endpoints.chat_models import ChatRequest, ChatResponse, SourceDocument
+from app.api.v1.endpoints.chat_models import (
+    ChatConfigResponse,
+    ChatRequest,
+    ChatResponse,
+    SourceDocument,
+)
 from app.services.chat_service import (
     GenerationError,
     RetrievalError,
@@ -14,6 +19,11 @@ router = APIRouter()
 @router.get("")
 def get_chats() -> dict:
     return {"message": "Get chats"}
+
+
+@router.get("/config", response_model=ChatConfigResponse)
+def get_chat_config() -> ChatConfigResponse:
+    return ChatConfigResponse(**chat_service.get_chat_config())
 
 
 @router.post("", response_model=ChatResponse)
