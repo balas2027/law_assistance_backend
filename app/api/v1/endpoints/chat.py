@@ -1,3 +1,4 @@
+import re
 from fastapi import APIRouter, HTTPException, status
 
 from app.api.v1.endpoints.chat_models import ChatRequest, ChatResponse, SourceDocument
@@ -9,6 +10,25 @@ from app.services.chat_service import (
 )
 
 router = APIRouter()
+
+
+def detect_mismatch_suggestion(query: str, selected_language: str | None) -> str | None:
+    if not selected_language:
+        return None
+
+    # Detect Tamil script or words
+    if selected_language != "ta" and (
+        re.search(r"[\u0B80-\u0BFF]", query) or any(w in query.lower() for w in ["vanakkam", "nandri", "sattam", "fir"])
+    ):
+        return "ta"
+
+    # Detect Hindi script or words
+    if selected_language != "hi" and (
+        re.search(r"[\u0900-\u097F]", query) or any(w in query.lower() for w in ["namaste", "kanoon", "dhara", "adalat"])
+    ):
+        return "hi"
+
+    return None
 
 
 @router.get("")
@@ -45,6 +65,8 @@ def post_chat(payload: ChatRequest) -> ChatResponse:
             detail="LLM provider is currently unavailable.",
         ) from exc
 
+    mismatch_suggestion = detect_mismatch_suggestion(payload.query, payload.selected_language)
+
     return ChatResponse(
         answer=result.answer,
         source_type=result.source_type,
@@ -56,4 +78,5 @@ def post_chat(payload: ChatRequest) -> ChatResponse:
             )
             for document in result.sources
         ],
+        language_mismatch_suggestion=mismatch_suggestion,
     )

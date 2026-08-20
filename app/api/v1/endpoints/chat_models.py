@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field, field_validator
 
 class ChatRequest(BaseModel):
     query: str
+    selected_language: Optional[str] = None
     source_type: Optional[str] = None
     top_k: int = Field(default=5, ge=1, le=20)
 
@@ -12,7 +13,6 @@ class ChatRequest(BaseModel):
     @classmethod
     def validate_query(cls, value: str) -> str:
         return value.strip()
-
 
 
 class SourceDocument(BaseModel):
@@ -25,3 +25,4 @@ class ChatResponse(BaseModel):
     answer: str
     source_type: Optional[str] = None
     sources: List[SourceDocument]
+    language_mismatch_suggestion: Optional[str] = None
