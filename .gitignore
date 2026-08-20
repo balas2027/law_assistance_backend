@@ -125,3 +125,6 @@ venv.bak/
 .idea/
 .env
 .env.*
+
+# Node dependencies
+node_modules/
